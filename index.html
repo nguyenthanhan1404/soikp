@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Công Cụ Soi Cầu Tài Xỉu - B52</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e9eef2;
+            padding: 40px;
+            color: #333;
+        }
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 25px;
+            margin-top: 15px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            background: #fff;
+            padding: 20px;
+            margin-top: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .result h3 {
+            color: #27ae60;
+        }
+        #prediction {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function analyze() {
+            const input = document.getElementById("results").value.trim().split(",").map(s => s.trim().toLowerCase());
+            let output = "";
+            if (input.length < 3) {
+                output = "Chưa đủ dữ liệu để soi cầu. Cần ít nhất 3 kết quả.";
+            } else {
+                const last = input[input.length - 1];
+                const last3 = input.slice(-3);
+                const last4 = input.slice(-4);
+                if (last3.every(r => r === last)) {
+                    output = `Cầu bệt ${last.toUpperCase()} đang chạy → Có thể theo tiếp ${last.toUpperCase()}.`;
+                } else if ((last4.join(",") === "tài,xỉu,tài,xỉu") || (last4.join(",") === "xỉu,tài,xỉu,tài")) {
+                    output = "Cầu 1-1 đang chạy → Có thể đánh ngược lại với kết quả gần nhất.";
+                } else {
+                    output = "Cầu chưa rõ ràng, nên đứng ngoài 1-2 ván để quan sát.";
+                }
+            }
+            document.getElementById("prediction").innerText = output;
+        }
+    </script>
+</head>
+<body>
+    <h2>Công Cụ Soi Cầu Tài Xỉu (B52 Club)</h2>
+    <label>Nhập các kết quả gần nhất (ngăn cách bằng dấu phẩy, ví dụ: Tài, Xỉu, Tài, Tài,...):</label>
+    <textarea id="results" rows="5" placeholder="Nhập kết quả tại đây..."></textarea>
+    <button onclick="analyze()">Phân Tích Cầu</button>
+    <div class="result">
+        <h3>Gợi Ý Đánh:</h3>
+        <p id="prediction"></p>
+    </div>
+</body>
+</html>
